@@ -1,6 +1,7 @@
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QMainWindow, QApplication
 import io
+import sys
 
 template = """<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
@@ -65,3 +66,10 @@ class SignIn(QMainWindow):
         super().__init__()
         f = io.StringIO(template)
         uic.loadUi(f, self)
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = SignIn()
+    ex.show()
+    sys.exit(app.exec_())
