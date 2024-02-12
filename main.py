@@ -14,7 +14,7 @@ class SignIn(QMainWindow):
         self.initUI()
 
     def initUI(self):
-        self.spn = [0.02, 0.02]
+        self.spn = [0.64, 0.64]
         self.coords = [30.314997, 59.938784]
         self.maps_server = 'http://static-maps.yandex.ru/1.x/'
         self.geocode_server = 'http://geocode-maps.yandex.ru/1.x/'
