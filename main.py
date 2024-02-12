@@ -15,7 +15,8 @@ class SignIn(QMainWindow):
 
     def initUI(self):
         self.spn = [0.64, 0.64]
-        self.coords = [30.314997, 59.938784]
+        # self.coords = [30.314997, 59.938784]
+        self.coords = [0,0]
         self.maps_server = 'http://static-maps.yandex.ru/1.x/'
         self.geocode_server = 'http://geocode-maps.yandex.ru/1.x/'
         self.setGeometry(20, 20, 600, 450)
@@ -28,6 +29,7 @@ class SignIn(QMainWindow):
         self.map.setPixmap(self.image)
 
     def update_map(self):
+        print(self.coords)
         print(f'{self.maps_server}?l=map&ll={self.coords[0]}%2C{self.coords[1]}&spn={self.spn[0]}%2C{self.spn[1]}')
         self.response = requests.get(f'{self.maps_server}?l=map&ll={self.coords[0]}%2C{self.coords[1]}&spn={self.spn[0]}%2C{self.spn[1]}')
         # self.coordinates = requests.get(f'{self.geocode_server}?l=map')
@@ -50,13 +52,25 @@ class SignIn(QMainWindow):
                 self.spn[0] /= 2
                 self.spn[1] /= 2
         elif event.key() == Qt.Key_Left:
-            self.coords[0] -= self.spn[0]
+            if self.coords[0] - self.spn[0] * 5 <= -180:
+                self.coords[0] = -180 + self.spn[0]
+            else:
+                self.coords[0] -= self.spn[0] * 5
         elif event.key() == Qt.Key_Right:
-            self.coords[0] += self.spn[0]
+            if self.coords[0] + self.spn[0] * 5 >=180:
+                self.coords[0] = 180 - self.spn[0]
+            else:
+                self.coords[0] += self.spn[0] * 5
         elif event.key() == Qt.Key_Up:
-            self.coords[1] += self.spn[1]
+            if self.coords[1] + self.spn[1] * 1.9 >= 100:
+                pass
+            else:
+                self.coords[1] += self.spn[1] * 1.9
         elif event.key() == Qt.Key_Down:
-            self.coords[1] -= self.spn[1]
+            if self.coords[1] - self.spn[1] * 1.9 <= -100:
+                pass
+            else:
+                self.coords[1] -= self.spn[1] * 1.9
         print(self.spn)
         self.update_map()
 
