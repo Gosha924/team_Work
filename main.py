@@ -1,3 +1,4 @@
+
 import urllib3.response
 
 import requests
@@ -65,22 +66,22 @@ class SignIn(QMainWindow):
             else:
                 self.spn[0] /= 2
                 self.spn[1] /= 2
-        elif event.key() == Qt.Key_Left:
+        elif event.key() == Qt.Key_A:
             if self.coords[0] - self.spn[0] * 5 <= -180:
                 self.coords[0] = -180 + self.spn[0]
             else:
                 self.coords[0] -= self.spn[0] * 5
-        elif event.key() == Qt.Key_Right:
+        elif event.key() == Qt.Key_D:
             if self.coords[0] + self.spn[0] * 5 >=180:
                 self.coords[0] = 180 - self.spn[0]
             else:
                 self.coords[0] += self.spn[0] * 5
-        elif event.key() == Qt.Key_Up:
+        elif event.key() == Qt.Key_W:
             if self.coords[1] + self.spn[1] * 1.9 >= 100:
                 pass
             else:
                 self.coords[1] += self.spn[1] * 1.9
-        elif event.key() == Qt.Key_Down:
+        elif event.key() == Qt.Key_S:
             if self.coords[1] - self.spn[1] * 1.9 <= -100:
                 pass
             else:
