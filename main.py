@@ -133,6 +133,26 @@ class SignIn(QMainWindow):
         else:
             self.update_map()
 
+    def mousePressEvent(self, event):
+        x = event.x()
+        y = event.y()
+        origin_x = self.coords[0] - self.spn[0] * 300 * 0.008575 + x * self.spn[0] * 0.008575
+        origin_y = self.coords[1] + self.spn[1] * 225* 0.00475 - y * self.spn[1] * 0.00475
+        needed_string = f'{str(origin_x)}, {str(origin_y)}'
+        if 600 >= x >= 0 and 450 >= y >= 0:
+            self.search_text.setText(needed_string)
+            self.search()
+            # self.reset()
+            # print(origin_x, origin_y)
+            # self.coords[0], self.coords[1] = origin_x, origin_y
+            # print(self.coords)
+            # self.search_point = [origin_x, origin_y]
+            # self.response = requests.get(
+            #     f'{self.maps_server}?l={self.type_map}&ll={self.coords[0]}%2C{self.coords[1]}&spn={self.spn[0]}%2C{self.spn[1]}&pt={self.search_point[0]}%2C{self.search_point[1]}'
+            # )
+            # self.update_map()
+            # self.searched = True
+
     def update_map(self):
         if not self.search_active:
             self.response = requests.get(
