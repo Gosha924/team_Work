@@ -4,7 +4,7 @@ import sys
 import requests
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QRadioButton, QTextEdit, QPushButton
+from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QRadioButton, QTextEdit, QPushButton, QCheckBox
 
 Key_W_Rus = 1062
 Key_A_Rus = 1060
@@ -56,8 +56,20 @@ class SignIn(QMainWindow):
         self.address_field = QTextEdit(self)
         self.address_field.resize(480, 30)
         self.address_field.move(20, 490)
+        self.postcard_index = QCheckBox('Индекс', self)
+        self.postcard_index.move(20, 520)
+        self.postcard_index.toggled.connect(self.set_index)
+        self.write_index = False
         self.address_field.setReadOnly(True)
         self.update_map()
+
+    def set_index(self):
+        if self.postcard_index.isChecked():
+            self.write_index = True
+        else:
+            self.write_index = False
+        # self.get_address()
+
 
     def reset(self):
         self.search_active = False
@@ -65,7 +77,17 @@ class SignIn(QMainWindow):
         self.update_map()
 
     def get_address(self, toponym):
-        self.address_field.setText(toponym['metaDataProperty']['GeocoderMetaData']['text'])
+        print(self.write_index)
+        if not self.write_index:
+            self.address_field.setText(toponym['metaDataProperty']['GeocoderMetaData']['text'])
+        else:
+            try:
+                toponym_postal = toponym["metaDataProperty"]["GeocoderMetaData"]["Address"]["postal_code"]
+                address = toponym['metaDataProperty']['GeocoderMetaData']['text']
+                self.address_field.setText(f'{address}, {toponym_postal}')
+            except KeyError:
+                address = toponym['metaDataProperty']['GeocoderMetaData']['text']
+                self.address_field.setText(address)
 
     def get_coords(self):
         self.search_active = True
