@@ -136,8 +136,8 @@ class SignIn(QMainWindow):
     def mousePressEvent(self, event):
         x = event.x()
         y = event.y()
-        origin_x = self.coords[0] - self.spn[0] * 300 * 0.008575 + x * self.spn[0] * 0.008575
-        origin_y = self.coords[1] + self.spn[1] * 225* 0.00475 - y * self.spn[1] * 0.00475
+        origin_x = self.coords[0] - self.spn[0] * 300 * 0.008565 + x * self.spn[0] * 0.008565
+        origin_y = self.coords[1] + self.spn[1] * 225* 0.00454 - y * self.spn[1] * 0.00454
         needed_string = f'{str(origin_x)}, {str(origin_y)}'
         if 600 >= x >= 0 and 450 >= y >= 0:
             self.search_text.setText(needed_string)
