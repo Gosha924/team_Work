@@ -60,6 +60,7 @@ class SignIn(QMainWindow):
         self.postcard_index.move(20, 520)
         self.postcard_index.toggled.connect(self.set_index)
         self.write_index = False
+        self.searched = False
         self.address_field.setReadOnly(True)
         self.update_map()
 
@@ -68,11 +69,13 @@ class SignIn(QMainWindow):
             self.write_index = True
         else:
             self.write_index = False
-        self.reset()
-        self.search()
+        if self.searched:
+            self.reset()
+            self.search()
 
 
     def reset(self):
+        self.searched = False
         self.search_active = False
         self.address_field.setText('')
         self.update_map()
@@ -105,6 +108,7 @@ class SignIn(QMainWindow):
         self.search_point = list(map(float, toponym['Point']['pos'].split()))
 
     def search(self):
+        self.reset()
         try:
             if not self.search_active:
                 self.get_coords()
@@ -112,6 +116,7 @@ class SignIn(QMainWindow):
                 f'{self.maps_server}?l={self.type_map}&ll={self.coords[0]}%2C{self.coords[1]}&spn={self.spn[0]}%2C{self.spn[1]}&pt={self.search_point[0]}%2C{self.search_point[1]}'
             )
             self.update_map()
+            self.searched = True
         except Exception as e:
             pass
 
