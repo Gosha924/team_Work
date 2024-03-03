@@ -68,6 +68,7 @@ class SignIn(QMainWindow):
             self.write_index = True
         else:
             self.write_index = False
+        self.reset()
         self.search()
 
 
