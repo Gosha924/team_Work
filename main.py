@@ -68,7 +68,7 @@ class SignIn(QMainWindow):
             self.write_index = True
         else:
             self.write_index = False
-        # self.get_address()
+        self.search()
 
 
     def reset(self):
@@ -77,7 +77,6 @@ class SignIn(QMainWindow):
         self.update_map()
 
     def get_address(self, toponym):
-        print(self.write_index)
         if not self.write_index:
             self.address_field.setText(toponym['metaDataProperty']['GeocoderMetaData']['text'])
         else:
@@ -105,12 +104,15 @@ class SignIn(QMainWindow):
         self.search_point = list(map(float, toponym['Point']['pos'].split()))
 
     def search(self):
-        if not self.search_active:
-            self.get_coords()
-        self.response = requests.get(
-            f'{self.maps_server}?l={self.type_map}&ll={self.coords[0]}%2C{self.coords[1]}&spn={self.spn[0]}%2C{self.spn[1]}&pt={self.search_point[0]}%2C{self.search_point[1]}'
-        )
-        self.update_map()
+        try:
+            if not self.search_active:
+                self.get_coords()
+            self.response = requests.get(
+                f'{self.maps_server}?l={self.type_map}&ll={self.coords[0]}%2C{self.coords[1]}&spn={self.spn[0]}%2C{self.spn[1]}&pt={self.search_point[0]}%2C{self.search_point[1]}'
+            )
+            self.update_map()
+        except Exception as e:
+            pass
 
     def change_type_of_map(self):
         if self.scheme_button.isChecked():
