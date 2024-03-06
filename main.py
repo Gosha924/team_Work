@@ -36,6 +36,7 @@ class SignIn(QMainWindow):
         self.scheme_button = QRadioButton("Схема", self)
         self.scheme_button.move(20, 455)
         self.scheme_button.toggled.connect(self.change_type_of_map)
+        self.scheme_button.toggle()
         self.satelite_button = QRadioButton("Спутник", self)
         self.satelite_button.move(120, 455)
         self.satelite_button.toggled.connect(self.change_type_of_map)
